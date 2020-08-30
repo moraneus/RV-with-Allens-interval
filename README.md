@@ -1,6 +1,8 @@
 # Details:
 This program gets as input, during execution, interval starting/ending.
+
 I used SWI-Prolog interpreter (Downloaded from: https://www.swi-prolog.org).
+
 ![Image of Allen's interval algebra] (https://raw.githubusercontent.com/moraneus/RV-with-Allens-interval/master/Interval%20types.png?token=ALS2F7N7KE4GSOSYXN7T4327JNV6I)
 ## Basic commands:
 1. Start new interval `start_interval(Interval_Name)` (When new interval starts, it's take the current timestamp and use it as argument related to the `start` fact)
