@@ -76,7 +76,7 @@ true.
 
 ?- start_interval('aaa').
 aaa already started
-false.
+False.
 
 ?- end_interval('aaa').
 aaa is ended
@@ -84,11 +84,11 @@ true.
 
 ?- end_interval('aaa').
 aaa is not running
-FALSE .
+False.
 
 ?- start_interval('aaa').
 aaa already started
-false.
+False.
 
 ?- start_interval('bbb').
 bbb is starting
@@ -130,7 +130,7 @@ true.
 
 ?- a_before_b('bbb', 'aaa').
 bbb don't before aaa
-false.
+False.
 
 ?- a_after_b('bbb', 'aaa').
 aaa before bbb
@@ -138,7 +138,7 @@ true.
 
 ?- a_after_b('aaa', 'bbb').
 bbb don't before aaa
-false.
+False.
 
 ?- a_overlaps_b('bbb', 'ccc').
 bbb overlaps ccc
@@ -146,7 +146,7 @@ true.
 
 ?- a_overlaps_b('ccc', 'bbb').
 ccc don't overlaps bbb
-false.
+False.
 
 ?- a_overlapped_by_b('ccc', 'bbb').
 bbb overlaps ccc
@@ -154,7 +154,7 @@ true.
 
 ?- a_overlapped_by_b('bbb', 'ccc').
 ccc don't overlaps bbb
-false.
+False.
 
 ?- start_interval('ddd').
 ddd is starting
@@ -178,7 +178,7 @@ true.
 
 ?- a_during_b('ddd', 'eee').
 ddd don't during eee
-false.
+False.
 
 ?- a_contain_b('ddd', 'eee').
 eee during ddd
@@ -186,6 +186,6 @@ true.
 
 ?- a_contain_b('eee', 'ddd').
 ddd don't during eee
-false.
+False.
 ```
 
