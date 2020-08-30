@@ -129,7 +129,7 @@ aaa before bbb
 true.
 
 ?- a_before_b('bbb', 'aaa').
-bbb don't before aaa
+bbb doesn't before aaa
 False.
 
 ?- a_after_b('bbb', 'aaa').
@@ -137,7 +137,7 @@ aaa before bbb
 true.
 
 ?- a_after_b('aaa', 'bbb').
-bbb don't before aaa
+bbb doesn't before aaa
 False.
 
 ?- a_overlaps_b('bbb', 'ccc').
@@ -145,7 +145,7 @@ bbb overlaps ccc
 true.
 
 ?- a_overlaps_b('ccc', 'bbb').
-ccc don't overlaps bbb
+ccc doesn't overlaps bbb
 False.
 
 ?- a_overlapped_by_b('ccc', 'bbb').
@@ -153,7 +153,7 @@ bbb overlaps ccc
 true.
 
 ?- a_overlapped_by_b('bbb', 'ccc').
-ccc don't overlaps bbb
+ccc doesn't overlaps bbb
 False.
 
 ?- start_interval('ddd').
@@ -177,7 +177,7 @@ eee during ddd
 true.
 
 ?- a_during_b('ddd', 'eee').
-ddd don't during eee
+ddd doesn't during eee
 False.
 
 ?- a_contain_b('ddd', 'eee').
@@ -185,7 +185,7 @@ eee during ddd
 true.
 
 ?- a_contain_b('eee', 'ddd').
-ddd don't during eee
+ddd doesn't during eee
 False.
 ```
 
