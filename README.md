@@ -1,5 +1,5 @@
 # Details:
-It's just a basic program who gets as input, during execution, interval starting/ending.
+It's just a basic program who gets as input, during execution, new facts of interval starting or ending.
 
 I used SWI-Prolog interpreter (Downloaded from: https://www.swi-prolog.org).
 
