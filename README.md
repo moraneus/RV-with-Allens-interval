@@ -3,7 +3,7 @@ This program gets as input, during execution, interval starting/ending.
 
 I used SWI-Prolog interpreter (Downloaded from: https://www.swi-prolog.org).
 
-![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
+![Image of Yaktocat](https://raw.githubusercontent.com/moraneus/RV-with-Allens-interval/master/Interval%20types.png)
 ## Basic commands:
 1. Start new interval `start_interval(Interval_Name)` (When new interval starts, it's take the current timestamp and use it as argument related to the `start` fact)
 2. Ending running interval `end_interval(Interval_Name)`
