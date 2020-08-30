@@ -146,7 +146,7 @@ true.
 
 ?- a_overlaps_b('ccc', 'bbb').
 ccc don't overlaps bbb
-false.
+<span style="color:red">some **false.** text</span>
 
 ?- a_overlapped_by_b('ccc', 'bbb').
 bbb overlaps ccc
