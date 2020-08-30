@@ -62,4 +62,130 @@ a_equal_b(Interval_A_Name, Interval_B_Name).
 ```
 
 # Run Example
+```prolog
+Welcome to SWI-Prolog (threaded, 64 bits, version 8.2.1)
+SWI-Prolog comes with ABSOLUTELY NO WARRANTY. This is free software.
+Please run ?- license. for legal details.
+
+For online help and background, visit https://www.swi-prolog.org
+For built-in help, use ?- help(Topic). or ?- apropos(Word).
+
+?- start_interval('aaa').
+aaa is starting
+true.
+
+?- start_interval('aaa').
+aaa already started
+false.
+
+?- end_interval('aaa').
+aaa is ended
+true.
+
+?- end_interval('aaa').
+aaa is not running
+false.
+
+?- start_interval('aaa').
+aaa already started
+false.
+
+?- start_interval('bbb').
+bbb is starting
+true.
+
+?- start_interval('ccc').
+ccc is starting
+true.
+
+?- end_interval('bbb').
+bbb is ended
+true.
+
+?- end_interval('ccc').
+ccc is ended
+true.
+
+?- listing(start).
+:- dynamic start/2.
+
+start(aaa, 1598779718.885983).
+start(bbb, 1598779783.872037).
+start(ccc, 1598779796.048538).
+
+true.
+
+?- listing(end).
+:- dynamic end/2.
+
+end(aaa, 1598779735.179297).
+end(bbb, 1598779807.620872).
+end(ccc, 1598779813.522073).
+
+true.
+
+?- a_before_b('aaa', 'bbb').
+aaa before bbb
+true.
+
+?- a_before_b('bbb', 'aaa').
+bbb don't before aaa
+false.
+
+?- a_after_b('bbb', 'aaa').
+aaa before bbb
+true.
+
+?- a_after_b('aaa', 'bbb').
+bbb don't before aaa
+false.
+
+?- a_overlaps_b('bbb', 'ccc').
+bbb overlaps ccc
+true.
+
+?- a_overlaps_b('ccc', 'bbb').
+ccc don't overlaps bbb
+false.
+
+?- a_overlapped_by_b('ccc', 'bbb').
+bbb overlaps ccc
+true.
+
+?- a_overlapped_by_b('bbb', 'ccc').
+ccc don't overlaps bbb
+false.
+
+?- start_interval('ddd').
+ddd is starting
+true.
+
+?- start_interval('eee').
+eee is starting
+true.
+
+?- end_interval('eee').
+eee is ended
+true.
+
+?- end_interval('ddd').
+ddd is ended
+true.
+
+?- a_during_b('eee', 'ddd').
+eee during ddd
+true.
+
+?- a_during_b('ddd', 'eee').
+ddd don't during eee
+false.
+
+?- a_contain_b('ddd', 'eee').
+eee during ddd
+true.
+
+?- a_contain_b('eee', 'ddd').
+ddd don't during eee
+false.
+```
 
