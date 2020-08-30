@@ -146,8 +146,10 @@ true.
 
 ?- a_overlaps_b('ccc', 'bbb').
 ccc don't overlaps bbb
+```
 <span style="color:red">some **false.** text</span>
 
+```prolog
 ?- a_overlapped_by_b('ccc', 'bbb').
 bbb overlaps ccc
 true.
