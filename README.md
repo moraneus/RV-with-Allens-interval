@@ -84,7 +84,7 @@ true.
 
 ?- end_interval('aaa').
 aaa is not running
-false.
+FALSE .
 
 ?- start_interval('aaa').
 aaa already started
@@ -146,10 +146,8 @@ true.
 
 ?- a_overlaps_b('ccc', 'bbb').
 ccc don't overlaps bbb
-```
-<span style="color:red">some **false.** text</span>
+false.
 
-```prolog
 ?- a_overlapped_by_b('ccc', 'bbb').
 bbb overlaps ccc
 true.
