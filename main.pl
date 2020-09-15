@@ -187,10 +187,10 @@ contains_rel_chk(Interval, Start_Time, End_Time) :-
                 ->
                     continue
                 ;
-					print_error('CONTAINS', Inner_Bag, Interval)
+		print_error('CONTAINS', Inner_Bag, Interval)
             )
         ;
-		print_error('CONTAINS', Interval, Bag)
+	print_error('CONTAINS', Interval, Bag)
     ).
 
 
