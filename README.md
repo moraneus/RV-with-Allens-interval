@@ -1,6 +1,8 @@
 # General Description:
 This program was written in prolog, and it's compatible with the SWI-Prolog interpreter (Downloaded from https://www.swi-prolog.org).
+
 It implements a monitoring version of Allen's interval algebra.
+
 Let's assume we are looking at the relative order of 2 intervals.
 Each interval has a start time and end time.
 Start new interval made by start(some_interval, start_time).
