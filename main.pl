@@ -32,7 +32,7 @@ print_error(Type, Arg_1, Arg_2) :-
 
 
 main(_) :-
-	consult('limitations.pl'),
+	consult('limitaions.pl'),
 	read_intervals_from_file('intervals.pl').
 	
 read_intervals_from_file(File) :-
@@ -53,11 +53,17 @@ execute_intervals(Stream) :-
 
 
 start(Interval, Start_Time) :-
-    assert(i_start(Interval, Start_Time)),
-    ansi_format([fg(green)], 
-        '[INFO]: ~w START at ~w TIME [~w, _)~n', 
-        [Interval, Start_Time, Start_Time]),
-    start_interval_chk(Interval, Start_Time).
+	(
+		i_start(Interval, Time)
+		->
+		ansi_format([fg(blue)], '[WARNING]: ~w already started at ~w TIME.~n', [Interval, Time])
+		;
+		(
+			assert(i_start(Interval, Start_Time)),
+			ansi_format([fg(green)], 
+			'[INFO]: ~w START at ~w TIME [~w, _)~n', 
+			[Interval, Start_Time, Start_Time]),
+			start_interval_chk(Interval, Start_Time))).
 
 end(Interval, End_Time) :-
     i_start(Interval, Start_Time),
@@ -153,7 +159,6 @@ after_rel_chk(Type, Interval, Time) :-
 
 /* Case: A CONTAINS B.
       A              
-	  
 |------------|	
    |-----|
       B
@@ -187,10 +192,10 @@ contains_rel_chk(Interval, Start_Time, End_Time) :-
                 ->
                     continue
                 ;
-		print_error('CONTAINS', Inner_Bag, Interval)
+					print_error('CONTAINS', Inner_Bag, Interval)
             )
         ;
-	print_error('CONTAINS', Interval, Bag)
+		print_error('CONTAINS', Interval, Bag)
     ).
 
 
@@ -329,8 +334,8 @@ over_lapped_by_rel_chk(Interval, Start_Time, End_Time) :-
                     B
 
 Two options should be checked for this interval:
-   * A start
-   * B end
+   * A end
+   * B starts
 */
 meets_rel_chk(Type, Interval, Time) :-
     (   
@@ -589,13 +594,3 @@ equal_rel_chk(Interval, Start_Time, End_Time) :-
 			continue
 		;
 		print_error('EQUAL', Inner_Bag, Interval)).
-
-
-
-
-
-
-
-
-
-
