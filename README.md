@@ -4,10 +4,9 @@ It implements a monitoring version of Allen's interval algebra. \
 Let's assume we are looking at the relative order of 2 intervals. \
 Each interval has a start time and end time:
 1. Start new interval made by `start(some_interval, start_time)`.
-2. End existing interval made by `end(some_interval, end_time)`.
-Every new start or end should be checked against the facts.
-Let's say that if the new insertion satisfied one of those facts, 
-that means it should be `FAILD`.
+2. End existing interval made by `end(some_interval, end_time)`. \
+Every new `start` or `end` should be checked against the facts. \
+Let's say that if the new insertion satisfied one of those facts, that means it should be `FAILD`.
 
 ### Types of Allen's interval algebra:
 ![Image of Inervals](https://www.researchgate.net/profile/Ioannis_Tsamardinos/publication/230561978/figure/fig2/AS:646067146223617@1531045819115/1-The-13-relations-between-intervals-in-Allens-algebra-Interval-A-is-always-either-at.png)
