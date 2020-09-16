@@ -169,7 +169,9 @@ Two options should be checked (both) for this interval:
 
 # Runing the program
 ## The program contains 3 file:
-1. 
+1. main.pl - The main program which finds the violations.
+2. limitations.pl - Contains all relative interval limitations as prolog terms.
+3. intervals.pl - Contains all interval operations (`starts' and `ends`) as prolog terms.
 
 # Output Example
 ```
