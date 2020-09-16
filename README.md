@@ -18,7 +18,7 @@ When the program is executed, it reads all the start/end fact from another separ
 The program runs automatically right after it executes.
 
 
-### About the monitor algorithem:
+### About the monitoring algorithem:
 We are trying to handle finding limitations of 13 different intervals within every interval operation. \
 This situation requires comparing times between those intervals. Due to the unification property of prolog, the comparing is a simple operation that checks only the matches intervals with the limitations that apply to them. \
 Yet, it still needs to run throughout all types of intervals checks. \
@@ -32,8 +32,8 @@ Other necessary checks will validate that specific interval didn't start twice, 
 |----------|	|----------|
 
 Two options should be checked for this interval:
-   * If B starts - check if A ends before B starts. 
-   * If A ends - check if B starts after A.
+   * If B starts - check if B starts after A.
+   * If A ends - check if A ends before B starts. 
 ```
 2. ##### Check if interval B after A
 ```
@@ -41,8 +41,8 @@ Two options should be checked for this interval:
 |----------|	|----------|
 
 Two options should be checked for this interval:
-   * If B starts - check if A ends before B.
-   * A ends - check if B starts after A.
+   * If B starts - check if B starts after A.
+   * A ends - check if A ends before B.
 ```
 3. ##### Check if interval A contains B 
 ```
@@ -67,40 +67,103 @@ Two options should be checked for this interval:
    * If B ends - check if B ends before A ends and it starts after A starts.
 ```
 5. ##### Check if interval A meets interval B 
-```prolog
-a_meets_b(Interval_A_Name, Interval_B_Name).
+```
+      A              
+|------------|	
+             |------------|
+                    B
+
+Two options should be checked for this interval:
+   * A ends - check if A ends when B started.
+   * B starts - check if B starts when A ended.
 ```
 6. ##### Check if interval A met by interval B 
-```prolog
-a_met_by_b(Interval_A_Name, Interval_B_Name).
+```     
+      A              
+|------------|	
+             |------------|
+                    B
+
+Two options should be checked for this interval:
+   * A ends - check if A ends when B starts.
+   * B starts - check if B starts when A ended.
 ```
 7. ##### Check if interval A overlaps interval B 
-```prolog
-a_overlaps_b(Interval_A_Name, Interval_B_Name).
+```
+      A              
+|------------|	
+        |------------|
+              B
+
+Two options should be checked for this interval:
+   * A ends - check if A ends between B, and B started between A.
+   * B ends - check if B starts between A, and A ended between B.
 ```
 8. ##### Check if interval A overlapped by interval B 
-```prolog
-a_overlapped_by_b(Interval_A_Name, Interval_B_Name).
+```
+      A              
+|------------|	
+        |------------|
+              B
+
+Two options should be checked for this interval:
+   * A ends - check if A ends between B, and B started between A.
+   * B ends - check if B starts between A, and A ended between B.
 ```
 9. ##### Check if interval A starts interval B 
-```prolog
-a_starts_b(Interval_A_Name, Interval_B_Name).
+```
+    A              
+|-------|	
+|-------------|
+       B
+
+Two options should be checked for this interval:
+   * A ends - check if A starts when B starts, and A ends between B.
+   * B ends - check if B starts when A starts, and A ends between B.
 ```
 10. ##### Check if interval A started by interval B 
-```prolog
-a_started_by_b(Interval_A_Name, Interval_B_Name).
+```
+    A              
+|-------|	
+|-------------|
+       B
+
+Two options should be checked for this interval:
+   * A ends - check if A starts when B starts.
+   * B ends - check if B starts when A starts.
 ```
 11. ##### Check if interval A finishes interval B 
-```prolog
-a_finishes_b(Interval_A_Name, Interval_B_Name).
+```
+          A              
+      |-------|	
+|-------------|
+       B
+
+Two options should be checked for this interval:
+   * A ends - check if A ends when B ends, and A starts between B.
+   * B ends - check if B ends when A ends, and A starts between B.
 ```
 12. ##### Check if interval A finished by interval B 
-```prolog
-a_finished_by_b(Interval_A_Name, Interval_B_Name).
+```
+          A              
+      |-------|	
+|-------------|
+       B
+
+Two options should be checked for this interval:
+   * A ends - check if A ends when B ends, and A starts between B.
+   * B ends - check if B ends when A ends, and A starts between B.
 ```
 13. ##### Check if interval A equal to interval B 
-```prolog
-a_equal_b(Interval_A_Name, Interval_B_Name).
+```
+       A              
+|-------------|	
+|-------------|
+       B
+
+Two options should be checked (both) for this interval:
+   * A end - check if A starts and end same as B.
+   * B end - check if B starts and end same as A.
 ```
 
 # Output Example
