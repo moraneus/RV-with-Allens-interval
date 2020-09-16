@@ -30,6 +30,7 @@ print_error(Type, Arg_1, Arg_2) :-
 	ansi_format([fg(red)], '[ERROR]: ~w ~w ~w.~n', [Arg_1, Type, Arg_2]).
 	
 
+
 main(_) :-
 	consult('limitaions.pl'),
 	read_intervals_from_file('intervals.pl').
@@ -55,7 +56,7 @@ start(Interval, Start_Time) :-
 	(
 		i_start(Interval, Time)
 		->
-		ansi_format([fg(blue)], '[WARNING]: ~w already started at ~w TIME.~n', [Interval, Time])
+		ansi_format([fg(yellow)], '[WARNING]: ~w already started at ~w TIME.~n', [Interval, Time])
 		;
 		(
 			assert(i_start(Interval, Start_Time)),
@@ -65,12 +66,25 @@ start(Interval, Start_Time) :-
 			start_interval_chk(Interval, Start_Time))).
 
 end(Interval, End_Time) :-
-    i_start(Interval, Start_Time),
-    assert(i_end(Interval, End_Time)),
-    ansi_format([fg(green)], 
-        '[INFO]: ~a END at ~a TIME [~w, ~w]~n', 
-        [Interval, End_Time, Start_Time, End_Time]),
-    end_interval_chk(Interval, Start_Time, End_Time).
+	(
+	i_start(Interval, Start_Time)
+	->
+		(
+			Start_Time > End_Time
+			->
+			ansi_format([fg(yellow)], '[WARNING]: ~w ended before it started.~n', [Interval]),
+			fail
+			;
+			assert(i_end(Interval, End_Time)),
+			ansi_format([fg(green)], 
+			'[INFO]: ~a END at ~a TIME [~w, ~w]~n', 
+			[Interval, End_Time, Start_Time, End_Time]),
+			end_interval_chk(Interval, Start_Time, End_Time)
+		)
+	;
+	ansi_format([fg(yellow)], '[WARNING]: ~w did not started yet.~n', [Interval]),
+	fail).
+	
 
 start_interval_chk(Interval, Start_Time) :-
     before_rel_chk('start', Interval, Start_Time),
@@ -593,3 +607,13 @@ equal_rel_chk(Interval, Start_Time, End_Time) :-
 			continue
 		;
 		print_error('EQUAL', Inner_Bag, Interval)).
+
+
+
+
+
+
+
+
+
+
