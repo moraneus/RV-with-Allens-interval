@@ -32,7 +32,7 @@ print_error(Type, Arg_1, Arg_2) :-
 
 
 main(_) :-
-	consult('limitaions.pl'),
+	consult('limitations.pl'),
 	read_intervals_from_file('intervals.pl').
 	
 read_intervals_from_file(File) :-
