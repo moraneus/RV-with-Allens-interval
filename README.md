@@ -14,7 +14,7 @@ Let's say that if the new insertion satisfied one of those facts, that means we 
 
 
 The program finds the limitations which are defined in a separate file ('limitations.pl'), and then it sends a notification to the console.
-When the program is executed, it reads all the start/end fact from another separate file ('intervals.pl'), line by line, and it checks if any of the limitations was apply due to the interval operation.
+When the program is executed, it reads all the `start`/`end` fact from another separate file ('intervals.pl'), line by line, and it checks if any of the limitations was apply due to the interval operation.
 The program runs automatically right after it executes.
 
 
