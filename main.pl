@@ -30,7 +30,6 @@ print_error(Type, Arg_1, Arg_2) :-
 	ansi_format([fg(red)], '[ERROR]: ~w ~w ~w.~n', [Arg_1, Type, Arg_2]).
 	
 
-
 main(_) :-
 	consult('limitaions.pl'),
 	read_intervals_from_file('intervals.pl').
