@@ -7,7 +7,7 @@ Each interval has a start time and end time:
 2. End existing interval made by `end(some_interval, end_time)`.
 
 Every new `start` or `end` should be checked against the facts. \
-Let's say that if the new insertion satisfied one of those facts, that means it should be `FAILD`.
+Let's say that if the new insertion satisfied one of those facts, that means we should be notified by the program.
 
 ### Types of Allen's interval algebra:
 ![Image of Inervals](https://www.researchgate.net/profile/Ioannis_Tsamardinos/publication/230561978/figure/fig2/AS:646067146223617@1531045819115/1-The-13-relations-between-intervals-in-Allens-algebra-Interval-A-is-always-either-at.png)
@@ -23,21 +23,43 @@ Due to the unification of prolog, the comparing is a simple operation who checks
 Yet, it steel need to run throught all types of intervals checks.
 Those checks allow to locate violation even if the intervals were called out of order (except that end should be after start).
 1. ##### Check if interval A before B 
-```      A               B
+```      
+     A               B
 |----------|	|----------|
 
 Two options should be checked for this interval:
-   * B start
-   * A end
+   * If B starts - check if A ends before B starts. 
+   * If A ends - check if B starts after A.
 ```
-2. ##### Check if interval A after B
+2. ##### Check if interval B after A
 ```
-      A               B
+      A             B
 |----------|	|----------|
 
 Two options should be checked for this interval:
-   * B start
+   * If B starts - check if A ends before B.
+   * A ends - check if B starts after A.
+```
+3. ##### Check if interval A contains B 
+```
+      A              
+|------------|	
+   |-----|
+      B
+      
+Two options should be checked for this interval:
+   * If A ends - check if A starts before B and it ends after B ends.
+   * If B ends - check if B ends before A ends and it starts after A starts.
+```
+4. ##### Check if interval B during A
+```
+|------------|	
+   |-----|
+      B
+
+Two options should be checked for this interval:
    * A end
+   * B end
 ```
 5. ##### Check if interval A meets interval B 
 ```prolog
