@@ -4,7 +4,8 @@ It implements a monitoring version of Allen's interval algebra. \
 Let's assume we are looking at the relative order of 2 intervals. \
 Each interval has a start time and end time:
 1. Start new interval made by `start(some_interval, start_time)`.
-2. End existing interval made by `end(some_interval, end_time)`. \
+2. End existing interval made by `end(some_interval, end_time)`.
+
 Every new `start` or `end` should be checked against the facts. \
 Let's say that if the new insertion satisfied one of those facts, that means it should be `FAILD`.
 
