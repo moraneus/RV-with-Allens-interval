@@ -53,13 +53,14 @@ Two options should be checked for this interval:
 ```
 4. ##### Check if interval B during A
 ```
+      A
 |------------|	
    |-----|
       B
 
 Two options should be checked for this interval:
-   * A end
-   * B end
+   * If A ends - check if A starts before B and it ends after B ends.
+   * If B ends - check if B ends before A ends and it starts after A starts.
 ```
 5. ##### Check if interval A meets interval B 
 ```prolog
