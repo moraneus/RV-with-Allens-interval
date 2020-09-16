@@ -167,6 +167,10 @@ Two options should be checked (both) for this interval:
    * B end - check if B starts and end same as A.
 ```
 
+# Runing the program
+## The program contains 3 file:
+1. 
+
 # Output Example
 ```
 [INFO]: y START at 14 TIME [14, _)
