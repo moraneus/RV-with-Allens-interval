@@ -13,7 +13,7 @@ Let's say that if the new insertion satisfied one of those facts, that means we 
 ![Image of Inervals](https://www.researchgate.net/profile/Ioannis_Tsamardinos/publication/230561978/figure/fig2/AS:646067146223617@1531045819115/1-The-13-relations-between-intervals-in-Allens-algebra-Interval-A-is-always-either-at.png)
 
 
-The program finds the limitations which are defined in a separate file ('limitations.pl'), and then it sends a notification to the console.
+The program finds the limitations which are defined in a separate file ('limitations.pl'), and then it sends a notification to the console. \
 When the program is executed, it reads all the `start`/`end` fact from another separate file ('intervals.pl'), line by line, and it checks if any of the limitations was apply due to the interval operation.
 The program runs automatically right after it executes.
 
