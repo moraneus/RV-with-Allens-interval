@@ -1,45 +1,42 @@
+/* Defines the entry point */
 :- initialization(main).
 
+/* Defines the dynamic facts which inserted during execution */ 
 :- dynamic i_start/2.
 :- dynamic i_end/2.
 
-:- multifile(starts/2).
-:- multifile(started_by/2).
-:- multifile(meets/2).
-:- multifile(met_by/2).
-:- multifile(overlaps/2).
-:- multifile(overlapp_by/2).
-:- multifile(after/2).
-:- multifile(before/2).
-:- multifile(contains/2).
-:- multifile(during/2).
-:- multifile(finishes/2).
-:- multifile(finished_by/2).
-:- multifile(equals/2).
-
-
+/* Check if list is empty */
 is_empty([]).
 
+/* Continue same as true, for readability */
 continue :- true.
 
+
+/* Check if goal target is between 2 values */
 is_between(Start, End, Target) :-
     Start < Target,
     Target < End.
-	
+
+/* Print relative interval violations if found */
 print_error(Type, Arg_1, Arg_2) :-
 	ansi_format([fg(red)], '[ERROR]: ~w ~w ~w.~n', [Arg_1, Type, Arg_2]).
 	
 
-
+/* Main which load automatically during the execution */
 main(_) :-
-	consult('limitaions.pl'),
-	read_intervals_from_file('intervals.pl').
+	consult('limitaions.pl'),						% Load the limititions facts into the program.
+	read_intervals_from_file('intervals.pl').		% Load the intervals and prepare them for execution.
 	
+/* Read file which contains Prolog term that 
+defines the interval start/end operations */
 read_intervals_from_file(File) :-
     open(File, read, Stream),
     execute_intervals(Stream),
     close(Stream).
 
+/*A recursive function that simulates loop which runs overall 
+interval start/end operations and try to see if any violation is
+occurring during the execution */
 execute_intervals(Stream) :-
   read_term(Stream, Interval_Operation, []),
   (   
@@ -51,47 +48,49 @@ execute_intervals(Stream) :-
         continue
   ).
 
-
+/* Call the necessary check if the interval is 'start' type */
 start(Interval, Start_Time) :-
 	(
-		i_start(Interval, Time)
+		i_start(Interval, Time)				% If it's already started before, notification will send to console.
 		->
 		ansi_format([fg(yellow)], '[WARNING]: ~w already started at ~w TIME.~n', [Interval, Time])
 		;
-		(
+		(									% Else	
 			assert(i_start(Interval, Start_Time)),
 			ansi_format([fg(green)], 
 			'[INFO]: ~w START at ~w TIME [~w, _)~n', 
 			[Interval, Start_Time, Start_Time]),
 			start_interval_chk(Interval, Start_Time))).
 
+/* Call the necessary check if the interval is 'end' type */
 end(Interval, End_Time) :-
 	(
-	i_start(Interval, Start_Time)
+	i_start(Interval, Start_Time)				% If the interval started.	
 	->
 		(
-			Start_Time > End_Time
+			Start_Time > End_Time				% If start time is bigger then end time.
 			->
 			ansi_format([fg(yellow)], '[WARNING]: ~w ended before it started.~n', [Interval]),
 			fail
-			;
+			;									% Else (If start time is lower then end time)
 			assert(i_end(Interval, End_Time)),
 			ansi_format([fg(green)], 
 			'[INFO]: ~a END at ~a TIME [~w, ~w]~n', 
 			[Interval, End_Time, Start_Time, End_Time]),
 			end_interval_chk(Interval, Start_Time, End_Time)
 		)
-	;
+	;											% Else (If it didn't start)
 	ansi_format([fg(yellow)], '[WARNING]: ~w did not started yet.~n', [Interval]),
 	fail).
 	
-
+/* List of the needed checks for starting intervals */
 start_interval_chk(Interval, Start_Time) :-
     before_rel_chk('start', Interval, Start_Time),
     after_rel_chk('start', Interval, Start_Time),
     meets_rel_chk('start', Interval, Start_Time),
     met_by_rel_chk('start', Interval, Start_Time).
 
+/* List of the needed checks for ending intervals */
 end_interval_chk(Interval, Start_Time, End_Time) :-
     before_rel_chk('end', Interval, End_Time),
     after_rel_chk('end', Interval, End_Time),
@@ -109,12 +108,12 @@ end_interval_chk(Interval, Start_Time, End_Time) :-
 
 
 /* Case: A BEFORE B.
-      A               B
+     A               B
 |----------|	|----------|
 
 Two options should be checked for this interval:
-   * B start
-   * A end
+   * If B starts - check if B starts after A.
+   * If A ends - check if A ends before B starts. 
 */	
 before_rel_chk(Type, Interval, Time) :-
     (   
@@ -140,12 +139,12 @@ before_rel_chk(Type, Interval, Time) :-
     ).
 
 /* Case: B AFTER A.
-      A               B
+      A             B
 |----------|	|----------|
 
 Two options should be checked for this interval:
-   * B start
-   * A end
+   * If B starts - check if B starts after A.
+   * A ends - check if A ends before B.
 */	
 after_rel_chk(Type, Interval, Time) :-
     (   
@@ -175,10 +174,10 @@ after_rel_chk(Type, Interval, Time) :-
 |------------|	
    |-----|
       B
-
+      
 Two options should be checked for this interval:
-   * A end
-   * B end
+   * If A ends - check if A starts before B and it ends after B ends.
+   * If B ends - check if B ends before A ends and it starts after A starts.
 */
 contains_rel_chk(Interval, Start_Time, End_Time) :-
     findall(X, 
@@ -214,14 +213,14 @@ contains_rel_chk(Interval, Start_Time, End_Time) :-
 
 
 /* Case: B DURING A.
-      A              
+      A
 |------------|	
    |-----|
       B
 
 Two options should be checked for this interval:
-   * A end
-   * B end
+   * If A ends - check if A starts before B and it ends after B ends.
+   * If B ends - check if B ends before A ends and it starts after A starts.
 */
 during_rel_chk(Interval, Start_Time, End_Time) :-
     findall(X, 
@@ -262,8 +261,8 @@ during_rel_chk(Interval, Start_Time, End_Time) :-
               B
 
 Two options should be checked for this interval:
-   * A end
-   * B end
+   * A ends - check if A ends between B, and B started between A.
+   * B ends - check if B starts between A, and A ended between B.
 */
 overlaps_rel_chk(Interval, Start_Time, End_Time) :-
     findall(X, 
@@ -306,8 +305,8 @@ overlaps_rel_chk(Interval, Start_Time, End_Time) :-
               B
 
 Two options should be checked for this interval:
-   * A end
-   * B end
+   * A ends - check if A ends between B, and B started between A.
+   * B ends - check if B starts between A, and A ended between B.
 */
 over_lapped_by_rel_chk(Interval, Start_Time, End_Time) :-
     findall(X, 
@@ -347,8 +346,8 @@ over_lapped_by_rel_chk(Interval, Start_Time, End_Time) :-
                     B
 
 Two options should be checked for this interval:
-   * A end
-   * B starts
+   * A ends - check if A ends when B started.
+   * B starts - check if B starts when A ended.
 */
 meets_rel_chk(Type, Interval, Time) :-
     (   
@@ -380,8 +379,8 @@ meets_rel_chk(Type, Interval, Time) :-
                     B
 
 Two options should be checked for this interval:
-   * A end
-   * B start
+   * A ends - check if A ends when B starts.
+   * B starts - check if B starts when A ended.
 */
 met_by_rel_chk(Type, Interval, Time) :-
     (   
@@ -413,8 +412,8 @@ met_by_rel_chk(Type, Interval, Time) :-
        B
 
 Two options should be checked for this interval:
-   * A end
-   * B end
+   * A ends - check if A starts when B starts, and A ends between B.
+   * B ends - check if B starts when A starts, and A ends between B.
 */
 starts_rel_chk(Interval, Start_Time, End_Time) :-
    findall(X, 
@@ -454,8 +453,8 @@ starts_rel_chk(Interval, Start_Time, End_Time) :-
        B
 
 Two options should be checked for this interval:
-   * A end
-   * B end
+   * A ends - check if A starts when B starts, and A ends between B.
+   * B ends - check if B starts when A starts, and A ends between B.
 */
 started_by_rel_chk(Interval, Start_Time, End_Time) :-
     findall(X, 
@@ -495,8 +494,8 @@ started_by_rel_chk(Interval, Start_Time, End_Time) :-
        B
 
 Two options should be checked for this interval:
-   * A end
-   * B end
+   * A ends - check if A ends when B ends, and A starts between B.
+   * B ends - check if B ends when A ends, and A starts between B.
 */
 finishes_rel_chk(Interval, Start_Time, End_Time) :-
    findall(X, 
@@ -536,8 +535,8 @@ finishes_rel_chk(Interval, Start_Time, End_Time) :-
        B
 
 Two options should be checked for this interval:
-   * A end
-   * B end
+   * A ends - check if A ends when B ends, and A starts between B.
+   * B ends - check if B ends when A ends, and A starts between B.
 */
 finished_by_rel_chk(Interval, Start_Time, End_Time) :-
     findall(X, 
@@ -577,8 +576,8 @@ finished_by_rel_chk(Interval, Start_Time, End_Time) :-
        B
 
 Two options should be checked (both) for this interval:
-   * A end
-   * B end
+   * A end - check if A starts and end same as B.
+   * B end - check if B starts and end same as A.
 */
 equal_rel_chk(Interval, Start_Time, End_Time) :-
     findall(X, 
