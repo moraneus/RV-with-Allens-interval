@@ -23,7 +23,7 @@ The program finds limitations of 13 different intervals within every interval op
 This situation requires comparing times between those intervals. \
 Due to the unification property built-in prolog, the comparing is a relatively simple operation that checks only the matches intervals with the limitations that apply to them. \
 Yet, it still needs to run throughout all types of intervals checking predicates. \
-Those checks allow us to locate violations even if the intervals were called out of time order as long as the `start` fact of interval X started before it `end`.
+Those checks allow us to locate violations even if the intervals were called out of time order as long as the `start` fact of interval X started before it `end`. \
 In a case were `end` occur before `start`, the program should fail. \
 Other necessary checks will validate that specific interval didn't start twice, or it has a negative duration, which can occur when it `end` before it `started`.
 
