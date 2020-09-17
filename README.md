@@ -130,8 +130,8 @@ Two options should be checked for this interval:
        B
 
 Two options should be checked for this interval:
-   * A ends - check if A starts when B starts.
-   * B ends - check if B starts when A starts.
+   * A ends - check if A starts when B starts, and A ends between B.
+   * B ends - check if B starts when A starts, and A ends between B.
 ```
 11. ##### Check if interval A finishes interval B 
 ```
