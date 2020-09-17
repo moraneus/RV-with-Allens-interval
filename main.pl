@@ -23,7 +23,7 @@ print_error(Type, Arg_1, Arg_2) :-
 	
 
 /* Main which load automatically during the execution */
-main(_) :-
+main(_) :- 
 	consult('limitaions.pl'),						% Load the limititions facts into the program.
 	read_intervals_from_file('intervals.pl').		% Load the intervals and prepare them for execution.
 	
