@@ -6,7 +6,7 @@ Each interval has a start time and end time:
 1. Start new interval made by `start(some_interval, start_time)`.
 2. End existing interval made by `end(some_interval, end_time)`.
 
-Every new `start` or `end` should be checked against the specification. \
+Every new `start` or `end` fact should be checked against the specification. \
 Let's say that if new asserted fact satisfied the specification, notification will send by the program and it stop.
 
 ### Types of Allen's interval algebra:
@@ -18,10 +18,10 @@ When the program is executed, it reads all the `start`/`end` fact from another s
 The program runs automatically right after it executes.
 
 
-### About the monitoring algorithem:
-# Pseudo code:
+## About the monitoring algorithem:
+### Pseudo code:
 ````
-1. Extract atom from specification -> list_of_spec_atoms[]
+1. Extract atom from specification -> list_of_spec_atoms[] //Run once at the begin
 2. for interval from intervals.pl:
      1. if interval in list_of_spec_atoms[]:
           1. assert interval
@@ -30,159 +30,31 @@ The program runs automatically right after it executes.
 3. return false
 ````
 
-The program finds limitations of 13 different intervals within every interval operation. \
+The program implement 13 different intervals type as they described at Allen's interval algebra. \
 This situation requires comparing times between those intervals. \
 Due to the unification property built-in prolog, the comparing is a relatively simple operation that checks only the matches intervals with the limitations that apply to them. \
-Yet, it still needs to run throughout all types of intervals checking predicates. \
-Those checks allow us to locate violations even if the intervals were called out of time order as long as the `start` fact of interval X started before it `end`. \
-In a case were `end` occur before `start`, the program should fail. \
-Other necessary checks will validate that specific interval didn't start twice, or it has a negative duration, which can occur when it `end` before it `started`.
-
-1. ##### Check if interval A before B 
-```      
-     A               B
-|----------|	|----------|
-
-Two options should be checked for this interval:
-   * If B starts - check if B starts after A.
-   * If A ends - check if A ends before B starts. 
-```
-2. ##### Check if interval B after A
-```
-      A             B
-|----------|	|----------|
-
-Two options should be checked for this interval:
-   * If B starts - check if B starts after A.
-   * A ends - check if A ends before B.
-```
-3. ##### Check if interval A contains B 
-```
-      A              
-|------------|	
-   |-----|
-      B
-      
-Two options should be checked for this interval:
-   * If A ends - check if A starts before B and it ends after B ends.
-   * If B ends - check if B ends before A ends and it starts after A starts.
-```
-4. ##### Check if interval B during A
-```
-      A
-|------------|	
-   |-----|
-      B
-
-Two options should be checked for this interval:
-   * If A ends - check if A starts before B and it ends after B ends.
-   * If B ends - check if B ends before A ends and it starts after A starts.
-```
-5. ##### Check if interval A meets interval B 
-```
-      A              
-|------------|	
-             |------------|
-                    B
-
-Two options should be checked for this interval:
-   * A ends - check if A ends when B started.
-   * B starts - check if B starts when A ended.
-```
-6. ##### Check if interval A met by interval B 
-```     
-      A              
-|------------|	
-             |------------|
-                    B
-
-Two options should be checked for this interval:
-   * A ends - check if A ends when B starts.
-   * B starts - check if B starts when A ended.
-```
-7. ##### Check if interval A overlaps interval B 
-```
-      A              
-|------------|	
-        |------------|
-              B
-
-Two options should be checked for this interval:
-   * A ends - check if A ends between B, and B started between A.
-   * B ends - check if B starts between A, and A ended between B.
-```
-8. ##### Check if interval A overlapped by interval B 
-```
-      A              
-|------------|	
-        |------------|
-              B
-
-Two options should be checked for this interval:
-   * A ends - check if A ends between B, and B started between A.
-   * B ends - check if B starts between A, and A ended between B.
-```
-9. ##### Check if interval A starts interval B 
-```
-    A              
-|-------|	
-|-------------|
-       B
-
-Two options should be checked for this interval:
-   * A ends - check if A starts when B starts, and A ends between B.
-   * B ends - check if B starts when A starts, and A ends between B.
-```
-10. ##### Check if interval A started by interval B 
-```
-    A              
-|-------|	
-|-------------|
-       B
-
-Two options should be checked for this interval:
-   * A ends - check if A starts when B starts, and A ends between B.
-   * B ends - check if B starts when A starts, and A ends between B.
-```
-11. ##### Check if interval A finishes interval B 
-```
-          A              
-      |-------|	
-|-------------|
-       B
-
-Two options should be checked for this interval:
-   * A ends - check if A ends when B ends, and A starts between B.
-   * B ends - check if B ends when A ends, and A starts between B.
-```
-12. ##### Check if interval A finished by interval B 
-```
-          A              
-      |-------|	
-|-------------|
-       B
-
-Two options should be checked for this interval:
-   * A ends - check if A ends when B ends, and A starts between B.
-   * B ends - check if B ends when A ends, and A starts between B.
-```
-13. ##### Check if interval A equal to interval B 
-```
-       A              
-|-------------|	
-|-------------|
-       B
-
-Two options should be checked (both) for this interval:
-   * A end - check if A starts and end same as B.
-   * B end - check if B starts and end same as A.
-```
 
 # Runing the program
 ## The program contains 3 file:
-1. main.pl - The main program which finds the violations.
-2. limitations.pl - Contains all relative interval limitations as prolog terms.
-3. intervals.pl - Contains all interval operations (`starts` and `ends`) as prolog terms.
+### 1. main.pl:
+The main program which try to see if the specification is satisfyied.
+### 2. specification.pl
+Contains the specification should be satisfyied. \
+The specification contains two types of boolean operands: \
+   1. Allen's Interval Algebra boolean operands (before, after, contains, during, overlaps, 
+      overlapped_by, meets, met_by, starts, started_by, finishes, finished_by, equals). \
+   2. Logic operands (and, or, not). \
+   
+   The priority of Allen's operands [1] is higher than the logic operands [2]. \
+   An expression can be written in various ways (prefix, infix, or any combination).  \
+   For example, let's take the expression 'a before b and not(d after c)'; all the next are valid formats:
+   1. 'a before b and not(d after c)'
+   2. 'berfore(a, b) and not(d after c)'
+   3. 'berfore(a, b) and not(after(d, c))'
+   4. 'and(before(a, b), not(after(d, c)))'
+### 3. intervals.pl:
+Contains all interval operations (`starts` and `ends`) as prolog terms.
+
 
 All you need is to update limitations.pl and intervals.pl with yours and then execute main.pl.
 
