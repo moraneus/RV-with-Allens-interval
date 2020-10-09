@@ -59,3 +59,46 @@ The specification contains two types of boolean operands:
    4. `and(before(a, b), not(after(d, c)))`
 ### 3. intervals.pl:
 Contains all interval operations (`starts` and `ends`) as prolog terms.
+
+## Running sample:
+### 1. Failure example:
+```
+[SATISFY]: a BEFORE b.
+[SATISFY]: d AFTER c.
+[SATISFY]: f OVERLAPS g.
+[SATISFY]: c AFTER b.
+[SATISFY]: e DURING d.
+[SATISFY]: i FINISHED BY k.
+[SATISFY]: d CONTAINS e.
+[SATISFY]: g OVERLAPPED BY f.
+[SATISFY]: g MEETS h.
+[SATISFY]: i MET BY g.
+[SATISFY]: h EQUALS i.
+[SATISFY]: m STARTS i.
+[SATISFY]: h STARTED BY m.
+[FAIL]
+
+% 68,027,179 inferences, 11.656 CPU in 11.766 seconds (99% CPU, 583
+```
+### 2. Success example:
+```
+[SATISFY]: a BEFORE b.
+[SATISFY]: d AFTER c.
+[SATISFY]: f OVERLAPS g.
+[SATISFY]: c AFTER b.
+[SATISFY]: e DURING d.
+[SATISFY]: i FINISHED BY k.
+[SATISFY]: d CONTAINS e.
+[SATISFY]: g OVERLAPPED BY f.
+[SATISFY]: g MEETS h.
+[SATISFY]: i MET BY g.
+[SATISFY]: h EQUALS i.
+[SATISFY]: m STARTS i.
+[SATISFY]: h STARTED BY m.
+[SATISFY]: k FINISHES i.
+[DONE]
+
+% 27,160 inferences, 0.000 CPU in 0.074 seconds (0% CPU, Infinite Lips)
+```
+
+Both was checked against ~2,000,000 new facts.
