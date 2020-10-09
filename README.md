@@ -31,7 +31,7 @@ The program runs automatically right after it executes.
 ````
 
 The program implements 13 different intervals type as they described at Allen's interval algebra. \
-This situation requires comparing times between those intervals. \
+This situation requires comparing times between those intervals. \ 
 Due to the unification property built-in prolog, the comparing is a relatively simple operation that checks only the matches intervals with the limitations that apply to them. \
 
 # Running the program
@@ -39,18 +39,18 @@ Due to the unification property built-in prolog, the comparing is a relatively s
 ### 1. main.pl:
 The main program which tries to see if the specification is satisfied.
 ### 2. specification.pl
-It contains the specification should be satisfied. \
-The specification contains two types of boolean operands: \
+It contains the specification should be satisfied. \ 
+The specification contains two types of boolean operands: \ 
    1. Allen's Interval Algebra boolean operands (before, after, contains, during, overlaps, 
-      overlapped_by, meets, met_by, starts, started_by, finishes, finished_by, equals). \
-   2. Logic operands (and, or, not). \
+      overlapped_by, meets, met_by, starts, started_by, finishes, finished_by, equals). \ 
+   2. Logic operands (and, or, not). \ 
    
-   The priority of Allen's operands [1] is higher than the logic operands [2]. \
-   An expression can be written in various ways (prefix, infix, or any combination).  \
+   The priority of Allen's operands [1] is higher than the logic operands [2]. \ 
+   An expression can be written in various ways (prefix, infix, or any combination).  \ 
    For example, let's take the expression 'a before b and not(d after c)'; all the next are valid formats:
-   1. 'a before b and not(d after c)'
-   2. 'berfore(a, b) and not(d after c)'
-   3. 'berfore(a, b) and not(after(d, c))'
-   4. 'and(before(a, b), not(after(d, c)))'
+   1. `a before b and not(d after c)`
+   2. `berfore(a, b) and not(d after c)`
+   3. `berfore(a, b) and not(after(d, c))`
+   4. `and(before(a, b), not(after(d, c)))`
 ### 3. intervals.pl:
 Contains all interval operations (`starts` and `ends`) as prolog terms.
