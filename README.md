@@ -61,6 +61,10 @@ The specification contains two types of boolean operands:
 Contains all interval operations (`starts` and `ends`) as prolog terms.
 
 ## Running sample:
+### Specification:
+```
+(((before(a, b) or d after c) and (f overlaps g)) and (c after b and (e during d and finished_by(i ,k)))) and (((d contains e and g overlapped_by f) and (g meets h and i met_by g)) and ((h equals i and m starts i) and (h started_by m and finishes(k, i)))).
+ ```
 ### 1. Failure example:
 ```
 [SATISFY]: a BEFORE b.
