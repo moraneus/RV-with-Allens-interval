@@ -6,19 +6,30 @@ Each interval has a start time and end time:
 1. Start new interval made by `start(some_interval, start_time)`.
 2. End existing interval made by `end(some_interval, end_time)`.
 
-Every new `start` or `end` should be checked against the facts. \
-Let's say that if the new insertion satisfied one of those facts, that means we should be notified by the program.
+Every new `start` or `end` should be checked against the specification. \
+Let's say that if new asserted fact satisfied the specification, notification will send by the program and it stop.
 
 ### Types of Allen's interval algebra:
 ![Image of Inervals](https://www.researchgate.net/profile/Ioannis_Tsamardinos/publication/230561978/figure/fig2/AS:646067146223617@1531045819115/1-The-13-relations-between-intervals-in-Allens-algebra-Interval-A-is-always-either-at.png)
 
 
-The program finds the limitations which are defined in a separate file ('limitations.pl'), and then it sends a notification to the console. \
-When the program is executed, it reads all the `start`/`end` fact from another separate file ('intervals.pl'), line by line, and it checks if any of the limitations was apply due to the interval operation. \
+The program finds the interval and their relation which are satisfyied the specification (defined in 'specification.pl'), and then it sends a notification to the console. \
+When the program is executed, it reads all the `start`/`end` fact from another separate file ('intervals.pl'), line by line, and it checks them againt the specification. \
 The program runs automatically right after it executes.
 
 
 ### About the monitoring algorithem:
+# Pseudo code:
+````
+1. Extract atom from specification -> list_of_spec_atoms[]
+2. for interval from intervals.pl:
+     1. if interval in list_of_spec_atoms[]:
+          1. assert interval
+          2. if specification satisfyied:
+               1. retun true
+3. return false
+````
+
 The program finds limitations of 13 different intervals within every interval operation. \
 This situation requires comparing times between those intervals. \
 Due to the unification property built-in prolog, the comparing is a relatively simple operation that checks only the matches intervals with the limitations that apply to them. \
