@@ -55,6 +55,8 @@ The specification contains two types of boolean operands:
    4. `and(before(a, b), not(after(d, c)))`
 ### 3. intervals.pl:
 Contains all interval operations (`starts` and `ends`) as prolog terms.
+### 4. intervals_generator.py:
+Python script which create prolog file contains those interval (`start` or `end`), sorted by time. The defualt parmaters can be changed inside the script.
 
 ## Running sample:
 ### Specification:
@@ -101,4 +103,4 @@ Contains all interval operations (`starts` and `ends`) as prolog terms.
 % 27,160 inferences, 0.000 CPU in 0.074 seconds (0% CPU, Infinite Lips)
 ```
 
-Both was checked against ~2,000,000 new facts.
+Both was checked against ~2,000,000 new facts (created with intervals_generator.py).
