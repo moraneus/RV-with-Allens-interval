@@ -40,6 +40,7 @@ Due to the unification property built-in prolog, the comparing is a relatively s
 The main program which tries to see if the specification is satisfied.
 ### 2. specification.pl
 It contains the specification should be satisfied. 
+
 The specification contains two types of boolean operands: 
    1. Allen's Interval Algebra boolean operands (before, after, contains, during, overlaps, overlapped_by, meets, met_by, starts, started_by, finishes, finished_by, equals).  
    2. Logic operands (and, or, not).
@@ -49,8 +50,8 @@ The specification contains two types of boolean operands:
    
    For example, let's take the expression `a before b and not(d after c)`; all the next are valid formats:
    1. `a before b and not(d after c)`
-   2. `berfore(a, b) and not(d after c)`
-   3. `berfore(a, b) and not(after(d, c))`
+   2. `before(a, b) and not(d after c)`
+   3. `before(a, b) and not(after(d, c))`
    4. `and(before(a, b), not(after(d, c)))`
 ### 3. intervals.pl:
 Contains all interval operations (`starts` and `ends`) as prolog terms.
