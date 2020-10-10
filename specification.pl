@@ -9,8 +9,8 @@
    An expression can be written in various ways (prefix, infix, or any combination). 
    For example, let's take the expression 'a before b and not(d after c)'; all the next are valid formats:
    1. 'a before b and not(d after c)'
-   2. 'berfore(a, b) and not(d after c)'
-   3. 'berfore(a, b) and not(after(d, c))'
+   2. 'before(a, b) and not(d after c)'
+   3. 'before(a, b) and not(after(d, c))'
    4. 'and(before(a, b), not(after(d, c)))'
 */
 % specification :- 
